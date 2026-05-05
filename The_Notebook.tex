@@ -4,6 +4,7 @@
 % ── Packages ─────────────────────────────────────────────────────────────────
 \usepackage{geometry}
 \usepackage{setspace}
+\usepackage{graphicx}
 \usepackage{titlesec}
 \usepackage{fancyhdr}
 \usepackage{fontspec}
@@ -12,7 +13,6 @@
 \usepackage{microtype}
 
 % ── Page Geometry ─────────────────────────────────────────────────────────────
-% Half of landscape letter (two pages print per sheet)
 \geometry{
 	paperwidth=5.5in,
 	paperheight=8in,
@@ -20,8 +20,7 @@
 	outer=0.625in,
 	top=.9in,
 	bottom=.55in,
-	headheight=14pt,
-	%   bindingoffset=0.1in,
+	headheight=14.5pt,
 }
 
 % ── Fonts ─────────────────────────────────────────────────────────────────────
@@ -39,10 +38,13 @@ RawFeature={+swsh}
 \renewcommand{\thepart}{}
 \renewcommand{\thesection}{\arabic{section}}
 
+% ── Chapter Image Macro ───────────────────────────────────────────────────────
+\newcommand{\chapterimage}{}
+
 % ── Title Formats ─────────────────────────────────────────────────────────────
 \titleformat{\chapter}[display]
-{\bfseries\itshape\large}
-{\filcenter\chaptername\ \thechapter}
+{\centering\bfseries\itshape\large}
+{\chapterimage\filcenter\chaptername\ \thechapter}
 {1em}
 {\titlerule\vspace{1ex}\filcenter}
 [\vspace{1ex}\titlerule]
@@ -60,13 +62,11 @@ RawFeature={+swsh}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 
-% Suppress header on chapter-opening pages
 \fancypagestyle{plain}{%
 	\fancyhf{}%
 	\renewcommand{\headrulewidth}{0pt}%
 }
 
-% Suppress header on intentionally blank pages
 \fancypagestyle{empty}{%
 	\fancyhf{}%
 	\renewcommand{\headrulewidth}{0pt}%
@@ -95,7 +95,9 @@ RawFeature={+swsh}
 	\pagestyle{fancy}
 	\endgroup
 
-
+\renewcommand{\chapterimage}{%
+	\includegraphics[width=0.5\textwidth]{Images/image1.png}\\[6pt]%
+} 
 \chapter{Miracles}\label{miracles}
 
 Who am I? And how, I wonder, will this story end?
@@ -207,7 +209,9 @@ that has come to dominate my life will once again prevail.
 And maybe, just maybe, it will.
 
 
-\chapter{Ghosts}\label{ghosts}
+\renewcommand{\chapterimage}{%
+	\includegraphics[width=0.5\textwidth]{Images/image2.png}\\[6pt]%
+} \chapter{Ghosts}\label{ghosts}
 
 It was early October 1946, and Noah Calhoun watched the fading sun sink
 lower from the wraparound porch of his plantation-style home. He liked
@@ -986,7 +990,10 @@ Allison Nelson, twenty-nine years old and engaged, a socialite,
 searching for answers she needed to know, and Noah Calhoun, the dreamer,
 thirty-one, visited by the ghost that had come to dominate his life.
 
-\chapter{Reunion}\label{reunion}
+
+\renewcommand{\chapterimage}{%
+	\includegraphics[width=0.5\textwidth]{Images/image4.png}\\[6pt]%
+} \chapter{Reunion}\label{reunion}
 
 Neither one of them moved as they faced each other.
 
