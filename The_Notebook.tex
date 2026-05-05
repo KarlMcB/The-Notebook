@@ -25,9 +25,7 @@
 
 % ── Fonts ─────────────────────────────────────────────────────────────────────
 \setmainfont{EB Garamond}
-\newfontface\swash{EBGaramond-Italic}[
-RawFeature={+swsh}
-]
+\newfontface\swash{EBGaramond-Italic}[RawFeature={+swsh}]
 
 % ── Penalties ─────────────────────────────────────────────────────────────────
 \widowpenalty=10000
@@ -42,10 +40,12 @@ RawFeature={+swsh}
 \newcommand{\chapterimage}{}
 
 % ── Title Formats ─────────────────────────────────────────────────────────────
+\titlespacing*{\chapter}{0pt}{-0.5in}{1em}
+
 \titleformat{\chapter}[display]
 {\centering\bfseries\itshape\large}
-{\chapterimage\filcenter\chaptername\ \thechapter}
-{1em}
+{\chapterimage}
+{0pt}
 {\titlerule\vspace{1ex}\filcenter}
 [\vspace{1ex}\titlerule]
 
@@ -96,8 +96,7 @@ RawFeature={+swsh}
 	\endgroup
 
 \renewcommand{\chapterimage}{%
-	\includegraphics[width=0.5\textwidth]{Images/image1.png}\\[6pt]%
-} 
+	\includegraphics[width=0.5\textwidth]{Images/image1.png}\\[6pt]} 
 \chapter{Miracles}\label{miracles}
 
 Who am I? And how, I wonder, will this story end?
@@ -210,8 +209,7 @@ And maybe, just maybe, it will.
 
 
 \renewcommand{\chapterimage}{%
-	\includegraphics[width=0.5\textwidth]{Images/image2.png}\\[6pt]%
-} \chapter{Ghosts}\label{ghosts}
+	\includegraphics[width=0.5\textwidth]{Images/image2.png}\\[6pt]} \chapter{Ghosts}\label{ghosts}
 
 It was early October 1946, and Noah Calhoun watched the fading sun sink
 lower from the wraparound porch of his plantation-style home. He liked
@@ -992,8 +990,7 @@ thirty-one, visited by the ghost that had come to dominate his life.
 
 
 \renewcommand{\chapterimage}{%
-	\includegraphics[width=0.5\textwidth]{Images/image4.png}\\[6pt]%
-} \chapter{Reunion}\label{reunion}
+	\includegraphics[width=0.5\textwidth]{Images/image3.png}\\[6pt]} \chapter{Reunion}\label{reunion}
 
 Neither one of them moved as they faced each other.
 
@@ -2471,8 +2468,9 @@ his face in his hands and tears in his eyes.
 
 He didn't know how to stop them.
 
-
-\chapter{Phone Calls}
+\renewcommand{\chapterimage}{%
+	\includegraphics[width=0.5\textwidth]{Images/image4.png}\\[6pt]}
+	\chapter{Phone Calls}
 
 Lon hung up the phone.
 
