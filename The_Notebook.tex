@@ -26,7 +26,7 @@
 % ── Fonts ─────────────────────────────────────────────────────────────────────
 \setmainfont{Big Caslon}
 \newfontface\swash{EB Garamond-Italic}[RawFeature={+swsh}]
-\newfontface\chapterfont{Snell Roundhand}
+\newfontface\chapterfont{EB Garamond-Italic}[RawFeature={+swsh}]
 
 % ── Penalties ─────────────────────────────────────────────────────────────────
 \widowpenalty=10000
@@ -45,9 +45,10 @@
 \titlespacing*{\chapter}{0pt}{-0.4in}{1em}
 \titleformat{\chapter}[display]
 {\centering\fontsize{24}{28}\selectfont\chapterfont}
-{\currentchapterimage}{0pt}
-{\titlerule\vspace{1ex}\filcenter}
-[\vspace{1ex}\titlerule]
+{\currentchapterimage}{18pt}
+%{\titlerule\vspace{1ex}\filcenter}
+{\filcenter}
+%[\vspace{1ex}\titlerule]
 
 % ── Headers and Footers ───────────────────────────────────────────────────────
 \pagestyle{fancy}
@@ -84,14 +85,129 @@
 
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
-	% Table of Contents
-	\begingroup
-	\pagestyle{empty}
-%	\tableofcontents
-	\cleardoublepage
-	\pagestyle{fancy}
-	\endgroup
 
+\frontmatter
+
+\begin{titlepage}
+	\centering
+	\vspace*{0cm}
+	
+	\vspace{0.9cm}
+	
+	{\fontsize{42}{46}\selectfont\itshape
+		The\\[0.2em]
+		Notebook\par}
+	
+	\vspace{0.5cm}
+	
+	{\fontsize{11}{13}\selectfont\addfontfeatures{LetterSpace=22}%
+		\MakeUppercase{a novel}}
+	
+	\vspace{0.7cm}
+	
+
+	
+%	\vspace{.1cm}
+	
+	\rule{3cm}{0.4pt}
+	
+	\vspace{0.9cm}
+	
+	{\fontsize{8}{10}\selectfont\addfontfeatures{LetterSpace=40}%
+		\MakeUppercase{written by}}
+	
+	\vspace{0.2cm}
+	
+	{\fontsize{14}{18}\selectfont\addfontfeatures{LetterSpace=8}%
+		Nicholas Sparks\par}
+	
+	\vfill
+
+%	\rule{3cm}{0.4pt}
+	
+%	\vspace{0.4cm}
+
+	
+	{\fontsize{8}{10}\selectfont\addfontfeatures{LetterSpace=40}%
+		\MakeUppercase{Foggy Walpole Books \& Press}}
+	
+		\begin{center}
+		\includegraphics[width=0.1\linewidth, keepaspectratio]{images/Foggy Walpole Dog}
+	\end{center}
+	
+	\vspace{-0.4cm}
+	
+	{\fontsize{8}{10}\selectfont\addfontfeatures{LetterSpace=12}%
+		Seattle}
+	
+	\vspace{0.5cm}
+\end{titlepage}
+\newpage
+
+%Copyright Page
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+
+{\setlength{\parindent}{0pt}
+	\fontsize{7.5}{11}\selectfont
+	
+	\textit{The Notebook}\\
+	Copyright \textcopyright\ 1996 by Nicholas Sparks\\[0.6em]
+	
+	\textit{Publishing History}\\
+	First published 1996 by Warner Books, New York\\
+	First paperback edition 1997 by Warner Books\\
+	Mass market paperback edition 1998 by Warner Books\\
+	First trade paperback edition 2004 by Grand Central Publishing\\
+	Reissue edition 2012 by Grand Central Publishing\\[0.6em]
+	
+	This edition published 2026 by\\
+	Foggy Walpole Books and Press, Seattle\\[0.6em]
+	
+	Printed in the United States of America\\[0.6em]
+	
+}
+
+%epigraph
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\begin{flushright}
+	{\fontsize{11}{16}\selectfont\itshape
+		``Whatever souls are made of,\\
+		his and mine are the same.''\par}
+	
+	\vspace{0.9em}
+	
+	{\fontsize{8}{11}\selectfont\addfontfeatures{LetterSpace=12}%
+		Emily Bront\"{e}\par}
+	
+	\vspace{0.2em}
+	
+	{\fontsize{7.5}{11}\selectfont\addfontfeatures{LetterSpace=8}%
+		\textit{Wuthering Heights}\par}
+\end{flushright}
+
+\vspace*{2.5cm}
+\vspace{0.8cm}
+
+%dedication
+\newpage
+\thispagestyle{empty}
+\vspace*{\fill}
+
+\begin{center}
+	{\fontsize{10}{16}\selectfont\itshape
+		This book is dedicated with love to\\[0.4em]
+		Cathy,\\[0.4em]
+		my wife and my friend.\par}
+\end{center}
+
+\vspace*{\fill}
+
+\mainmatter
 
 \chapterimage{Images/image1}
 \chapter{Miracles}
