@@ -24,8 +24,9 @@
 }
 
 % ── Fonts ─────────────────────────────────────────────────────────────────────
-\setmainfont{Georgia}
-\newfontface\swash{Georgia-Italic}[RawFeature={+swsh}]
+\setmainfont{Big Caslon}
+\newfontface\swash{EB Garamond-Italic}[RawFeature={+swsh}]
+\newfontface\chapterfont{Snell Roundhand}
 
 % ── Penalties ─────────────────────────────────────────────────────────────────
 \widowpenalty=10000
@@ -37,28 +38,24 @@
 \renewcommand{\thesection}{\arabic{section}}
 
 % ── Chapter Image Macro ───────────────────────────────────────────────────────
-\newcommand{\chapterimage}{}
+\newcommand{\currentchapterimage}{}
+\newcommand{\chapterimage}[1]{\renewcommand{\currentchapterimage}{\includegraphics[width=.5\linewidth]{#1}}}
 
 % ── Title Formats ─────────────────────────────────────────────────────────────
 \titlespacing*{\chapter}{0pt}{-0.4in}{1em}
-
 \titleformat{\chapter}[display]
-{\centering\bfseries\itshape\large}
-{\chapterimage}
-{0pt}
+{\centering\fontsize{24}{28}\selectfont\chapterfont}
+{\currentchapterimage}{0pt}
 {\titlerule\vspace{1ex}\filcenter}
 [\vspace{1ex}\titlerule]
-
-\titleformat{\part}[display]
-{\centering\Huge\bfseries}
-{\thepart}{1em}{}
 
 % ── Headers and Footers ───────────────────────────────────────────────────────
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[LO,RE]{\thepage}
-\fancyhead[RO]{\itshape The Notebook}
-\fancyhead[LE]{\itshape\leftmark}
+\newfontface\headerfont{Bodoni 72-Book Italic}
+\fancyhead[LO,RE]{\headerfont\thepage}
+\fancyhead[RO]{\headerfont\itshape The Notebook}
+\fancyhead[LE]{\headerfont\itshape\leftmark}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 
@@ -90,13 +87,13 @@
 	% Table of Contents
 	\begingroup
 	\pagestyle{empty}
-	\tableofcontents
+%	\tableofcontents
 	\cleardoublepage
 	\pagestyle{fancy}
 	\endgroup
 
-\renewcommand{\chapterimage}{%
-	\includegraphics[width=0.5\textwidth]{Images/image1.png}\\[6pt]} 
+
+\chapterimage{Images/image1}
 \chapter{Miracles}
 
 Who am I? And how, I wonder, will this story end?
@@ -208,8 +205,8 @@ that has come to dominate my life will once again prevail.
 And maybe, just maybe, it will.
 
 
-\renewcommand{\chapterimage}{%
-	\includegraphics[width=0.5\textwidth]{Images/image2.png}\\[6pt]} \chapter{Ghosts}
+\chapterimage{Images/image2}
+ \chapter{Ghosts}
 
 It was early October 1946, and Noah Calhoun watched the fading sun sink
 lower from the wraparound porch of his plantation-style home. He liked
@@ -497,7 +494,7 @@ easy charm, introduced himself at a Christmas party, she saw in him
 exactly what she needed: someone with confidence about the future and a
 sense of humor that drove all her fears away.
 
-He was handsome, intelligent, and driven, a successful lawyer eight
+He was handsome, intelligent, and driven, a successful law\-yer eight
 years older than she, and he pursued his job with passion, not only
 winning cases, but also making a name for himself. She understood his
 vigorous pursuit of success, for her father and most of the men she met
@@ -976,7 +973,7 @@ From a distance, he looked the same as he had back then. For a moment,
 when the light from the sun was behind him, he almost seemed to vanish
 into the scenery.
 
-Her car continued forward, rolling slowly, then finally stopped beneath
+Her car continued forward, rolling slowly, then finally stopp\-ed beneath
 an oak tree that shaded the front of the house. She turned the key,
 never taking her eyes from him, and the engine sputtered to a halt.
 
@@ -989,8 +986,8 @@ searching for answers she needed to know, and Noah Calhoun, the dreamer,
 thirty-one, visited by the ghost that had come to dominate his life.
 
 
-\renewcommand{\chapterimage}{%
-	\includegraphics[width=0.5\textwidth]{Images/image3.png}\\[6pt]} \chapter{Reunion}
+\chapterimage{Images/image3} 
+\chapter{Reunion}
 
 Neither one of them moved as they faced each other.
 
@@ -1532,7 +1529,7 @@ and she left with her tail between her legs.
 He pointed to her car. ``Did you leave anything in there that you need
 to get out?''
 
-``No, I got in earlier and unpacked already.'' Her voice sounded
+``No, I got in earlier and unpacked already.'' Her voice sound\-ed
 different to her, as if the years had suddenly been undone.
 
 ``Good enough,'' he said as he reached the back porch and started up the
@@ -2468,8 +2465,7 @@ his face in his hands and tears in his eyes.
 
 He didn't know how to stop them.
 
-\renewcommand{\chapterimage}{%
-	\includegraphics[width=0.5\textwidth]{Images/image4.png}\\[6pt]}
+\chapterimage{Images/image4}
 	\chapter{Phone Calls}
 
 Lon hung up the phone.
@@ -2815,7 +2811,7 @@ doing now, had she never seen the article in the paper. It wasn't very
 difficult to imagine, because her routines seldom changed. It was
 Wednesday, which meant bridge at the country club, then on to the Junior
 Women's League, where they would probably be arranging another
-fundraiser for the private school or hospital. After that, a visit with
+fund\-raiser for the private school or hospital. After that, a visit with
 her mother, then home to get ready for dinner with Lon, because he made
 it a point to leave work by seven. It was the one night a week she saw
 him regularly.
