@@ -1,16 +1,14 @@
 % Document Class
 \documentclass[12pt]{book}
 
-% ── Packages ─────────────────────────────────────────────────────────────────
+% ── Packages ──────────────────────────────────────────────────────────────────
 \usepackage{geometry}
-\usepackage{setspace}
 \usepackage{graphicx}
 \usepackage{titlesec}
 \usepackage{fancyhdr}
 \usepackage{fontspec}
-\usepackage{pgfornament}
 \usepackage{lettrine}
-	\renewcommand{\LettrineFontHook}{\swash}
+\renewcommand{\LettrineFontHook}{\swash}
 \usepackage{microtype}
 
 % ── Page Geometry ─────────────────────────────────────────────────────────────
@@ -19,7 +17,7 @@
 	paperheight=8in,
 	inner=0.7in,
 	outer=0.625in,
-	top=.9in,
+	top=.85in,
 	bottom=.55in,
 	headheight=14.5pt,
 }
@@ -36,14 +34,8 @@
 
 % ── Section Numbering ─────────────────────────────────────────────────────────
 \renewcommand{\thepart}{}
-\renewcommand{\thesection}{\arabic{section}}
-
-% ── Chapter Image Macro ───────────────────────────────────────────────────────
-\newcommand{\currentchapterimage}{}
-\newcommand{\chapterimage}[1]{\renewcommand{\currentchapterimage}{\includegraphics[width=.5\linewidth]{#1}}}
 
 % ── Title Formats ─────────────────────────────────────────────────────────────
-
 \newfontface\ornamentsFont{Printers Ornaments One}
 \newcommand{\chapterornament}[1]{\def\currentornament{#1}}
 \def\currentornament{}
@@ -98,130 +90,114 @@
 
 % ══════════════════════════════════════════════════════════════════════════════
 \begin{document}
-
-\frontmatter
-
-\begin{titlepage}
-	\centering
-	\vspace*{0cm}
+	\frontmatter
 	
-	\vspace{0.9cm}
-	
-	{\fontsize{42}{46}\selectfont\itshape
-		The\\[0.2em]
-		Notebook\par}
-	
-	\vspace{0.5cm}
-	
-	{\fontsize{11}{13}\selectfont\addfontfeatures{LetterSpace=22}%
-		\MakeUppercase{a novel}}
-	
-	\vspace{0.7cm}
-	
-
-	
-%	\vspace{.1cm}
-	
-	\rule{3cm}{0.4pt}
-	
-	\vspace{0.9cm}
-	
-	{\fontsize{8}{10}\selectfont\addfontfeatures{LetterSpace=40}%
-		\MakeUppercase{written by}}
-	
-	\vspace{0.2cm}
-	
-	{\fontsize{14}{18}\selectfont\addfontfeatures{LetterSpace=8}%
-		Nicholas Sparks\par}
-	
-	\vfill
-
-%	\rule{3cm}{0.4pt}
-	
-%	\vspace{0.4cm}
-
-	
-	{\fontsize{8}{10}\selectfont\addfontfeatures{LetterSpace=40}%
-		\MakeUppercase{Foggy Walpole Books \& Press}}
-	
-		\begin{center}
+	% ── Title Page ────────────────────────────────────────────────────────────────
+	\begin{titlepage}
+		\centering
+		\vspace*{0.9cm}
+		
+		{\fontsize{42}{46}\selectfont\itshape
+			The\\[0.2em]
+			Notebook\par}
+		
+		\vspace{0.5cm}
+		
+		{\fontsize{11}{13}\selectfont\addfontfeatures{LetterSpace=22}%
+			\MakeUppercase{a novel}}
+		
+		\vspace{0.7cm}
+		
+		\rule{3cm}{0.4pt}
+		
+		\vspace{0.9cm}
+		
+		{\fontsize{8}{10}\selectfont\addfontfeatures{LetterSpace=40}%
+			\MakeUppercase{written by}}
+		
+		\vspace{0.2cm}
+		
+		{\fontsize{14}{18}\selectfont\addfontfeatures{LetterSpace=8}%
+			Nicholas Sparks\par}
+		
+		\vfill
+		
+		{\fontsize{8}{10}\selectfont\addfontfeatures{LetterSpace=40}%
+			\MakeUppercase{Foggy Walpole Books \& Press}}
+		
 		\includegraphics[width=0.1\linewidth, keepaspectratio]{images/Foggy Walpole Dog}
+		
+		\vspace{-0.4cm}
+		
+		{\fontsize{8}{10}\selectfont\addfontfeatures{LetterSpace=12}%
+			Seattle}
+		
+		\vspace{0.5cm}
+	\end{titlepage}
+	
+	% ── Copyright Page ────────────────────────────────────────────────────────────
+	\newpage
+	\thispagestyle{empty}
+	\vspace*{\fill}
+	
+	{\setlength{\parindent}{0pt}%
+		\fontsize{7.5}{11}\selectfont
+		
+		\textit{The Notebook}\\
+		Copyright \textcopyright\ 1996 by Nicholas Sparks\\[0.6em]
+		
+		\textit{Publishing History}\\
+		First published 1996 by Warner Books, New York\\
+		First paperback edition 1997 by Warner Books\\
+		Mass market paperback edition 1998 by Warner Books\\
+		First trade paperback edition 2004 by Grand Central Publishing\\
+		Reissue edition 2012 by Grand Central Publishing\\[0.6em]
+		
+		This edition published 2026 by\\
+		Foggy Walpole Books and Press, Seattle\\[0.6em]
+		
+		For Louise\\[0.6em]
+	}
+	
+	% ── Epigraph ──────────────────────────────────────────────────────────────────
+	\newpage
+	\thispagestyle{empty}
+	\vspace*{\fill}
+	
+	\begin{flushright}
+		{\fontsize{11}{16}\selectfont\itshape
+			``Whatever souls are made of,\\
+			his and mine are the same.''\par}
+		
+		\vspace{0.9em}
+		
+		{\fontsize{8}{11}\selectfont\addfontfeatures{LetterSpace=12}%
+			Emily Bront\"{e}\par}
+		
+		\vspace{0.2em}
+		
+		{\fontsize{7.5}{11}\selectfont\addfontfeatures{LetterSpace=8}%
+			\textit{Wuthering Heights}\par}
+	\end{flushright}
+	
+	\vspace*{3.3cm}
+	
+	% ── Dedication ────────────────────────────────────────────────────────────────
+	\newpage
+	\thispagestyle{empty}
+	\vspace*{\fill}
+	
+	\begin{center}
+		{\fontsize{10}{16}\selectfont\itshape
+			This book is dedicated with love to\\[0.4em]
+			Cathy,\\[0.4em]
+			my wife and my friend.\par}
 	\end{center}
 	
-	\vspace{-0.4cm}
+	\vspace*{\fill}
 	
-	{\fontsize{8}{10}\selectfont\addfontfeatures{LetterSpace=12}%
-		Seattle}
+	\mainmatter
 	
-	\vspace{0.5cm}
-\end{titlepage}
-\newpage
-
-%Copyright Page
-\newpage
-\thispagestyle{empty}
-\vspace*{\fill}
-
-{\setlength{\parindent}{0pt}
-	\fontsize{7.5}{11}\selectfont
-	
-	\textit{The Notebook}\\
-	Copyright \textcopyright\ 1996 by Nicholas Sparks\\[0.6em]
-	
-	\textit{Publishing History}\\
-	First published 1996 by Warner Books, New York\\
-	First paperback edition 1997 by Warner Books\\
-	Mass market paperback edition 1998 by Warner Books\\
-	First trade paperback edition 2004 by Grand Central Publishing\\
-	Reissue edition 2012 by Grand Central Publishing\\[0.6em]
-	
-	This edition published 2026 by\\
-	Foggy Walpole Books and Press, Seattle\\[0.6em]
-	
-For Louise\\[0.6em]
-	
-}
-
-%epigraph
-\newpage
-\thispagestyle{empty}
-\vspace*{\fill}
-
-\begin{flushright}
-	{\fontsize{11}{16}\selectfont\itshape
-		``Whatever souls are made of,\\
-		his and mine are the same.''\par}
-	
-	\vspace{0.9em}
-	
-	{\fontsize{8}{11}\selectfont\addfontfeatures{LetterSpace=12}%
-		Emily Bront\"{e}\par}
-	
-	\vspace{0.2em}
-	
-	{\fontsize{7.5}{11}\selectfont\addfontfeatures{LetterSpace=8}%
-		\textit{Wuthering Heights}\par}
-\end{flushright}
-
-\vspace*{2.5cm}
-\vspace{0.8cm}
-
-%dedication
-\newpage
-\thispagestyle{empty}
-\vspace*{\fill}
-
-\begin{center}
-	{\fontsize{10}{16}\selectfont\itshape
-		This book is dedicated with love to\\[0.4em]
-		Cathy,\\[0.4em]
-		my wife and my friend.\par}
-\end{center}
-
-\vspace*{\fill}
-
-\mainmatter
-
 \chapterornament{p}
 \chapter{Miracles}
 
