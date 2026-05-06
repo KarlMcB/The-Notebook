@@ -42,13 +42,25 @@
 \newcommand{\chapterimage}[1]{\renewcommand{\currentchapterimage}{\includegraphics[width=.5\linewidth]{#1}}}
 
 % ── Title Formats ─────────────────────────────────────────────────────────────
-\titlespacing*{\chapter}{0pt}{-0.4in}{1em}
-\titleformat{\chapter}[display]
-{\centering\fontsize{24}{28}\selectfont\chapterfont}
-{\currentchapterimage}{18pt}
-%{\titlerule\vspace{1ex}\filcenter}
-{\filcenter}
-%[\vspace{1ex}\titlerule]
+
+\newfontface\ornamentsFont{Printers Ornaments One}
+\newcommand{\chapterornament}[1]{\def\currentornament{#1}}
+\def\currentornament{}
+
+\newcommand{\chaptertitleblock}[1]{%
+	#1%
+	\ifx\currentornament\empty\else
+	\\[6pt]{\ornamentsFont\currentornament}%
+	\vspace{1em}
+	\fi
+}
+
+\titlespacing*{\chapter}{0pt}{0.1\textheight}{1em}
+\titleformat{\chapter}[block]
+{\chapterfont\Huge\centering}
+{}
+{0pt}
+{\chaptertitleblock}
 
 % ── Headers and Footers ───────────────────────────────────────────────────────
 \pagestyle{fancy}
@@ -165,7 +177,7 @@
 	This edition published 2026 by\\
 	Foggy Walpole Books and Press, Seattle\\[0.6em]
 	
-	Printed in the United States of America\\[0.6em]
+For Louise\\[0.6em]
 	
 }
 
@@ -209,7 +221,7 @@
 
 \mainmatter
 
-\chapterimage{Images/image1}
+\chapterornament{K}
 \chapter{Miracles}
 
 Who am I? And how, I wonder, will this story end?
@@ -321,8 +333,8 @@ that has come to dominate my life will once again prevail.
 And maybe, just maybe, it will.
 
 
-\chapterimage{Images/image2}
- \chapter{Ghosts}
+\chapterornament{K}
+\chapter{Ghosts}
 
 It was early October 1946, and Noah Calhoun watched the fading sun sink
 lower from the wraparound porch of his plantation-style home. He liked
@@ -1102,7 +1114,7 @@ searching for answers she needed to know, and Noah Calhoun, the dreamer,
 thirty-one, visited by the ghost that had come to dominate his life.
 
 
-\chapterimage{Images/image3} 
+
 \chapter{Reunion}
 
 Neither one of them moved as they faced each other.
@@ -2581,7 +2593,7 @@ his face in his hands and tears in his eyes.
 
 He didn't know how to stop them.
 
-\chapterimage{Images/image4}
+
 	\chapter{Phone Calls}
 
 Lon hung up the phone.
@@ -3084,6 +3096,7 @@ have been, and she wondered what that meant.
 As she was driving over the drawbridge less than four minutes after
 she'd left the inn, Lon called from the courthouse.
 
+
 \chapter{Moving Water}
 
 Noah was sitting in his rocker, drinking sweet tea, listening for the
@@ -3413,6 +3426,7 @@ the canoe as he propelled it forward, away from the pull of the creek.
 
 ``Okay,'' he finally said after he'd stopped paddling. ``You can open
 them now.''
+
 
 \chapter{Swans and Storms}
 
@@ -4068,6 +4082,7 @@ and I always will.''
 
 ``Oh, Noah,'' she said, pulling him to her. She wanted him, needed him
 now more than ever, like nothing she'd ever known.
+
 
 \chapter{Courtrooms}
 
