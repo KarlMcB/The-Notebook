@@ -10,6 +10,8 @@
 \usepackage{lettrine}
 \renewcommand{\LettrineFontHook}{\swash}
 \usepackage{microtype}
+\usepackage{pgfornament}        % ← replaces Printers Ornaments One
+\usepackage{tikz}               % ← required by pgfornament
 
 % ── Page Geometry ─────────────────────────────────────────────────────────────
 \geometry{
@@ -26,6 +28,7 @@
 \setmainfont{Baskerville}
 \newfontface\swash{EB Garamond-Italic}[RawFeature={+swsh}]
 \newfontface\chapterfont{EB Garamond-Italic}[RawFeature={+swsh}]
+\newfontface\headerfont{Bodoni 72-Book Italic}
 
 % ── Penalties ─────────────────────────────────────────────────────────────────
 \widowpenalty=10000
@@ -35,19 +38,72 @@
 % ── Section Numbering ─────────────────────────────────────────────────────────
 \renewcommand{\thepart}{}
 
-% ── Title Formats ─────────────────────────────────────────────────────────────
-\newfontface\ornamentsFont{Printers Ornaments One}
+% ── pgfornament helpers ───────────────────────────────────────────────────────
+%
+%  \centerornament{NUMBER}{WIDTH}
+%    Draws a single ornament centred on the text block.
+%    Example: \centerornament{84}{3cm}
+%
+%  \ornamentdivider{LEFT}{RIGHT}{WIDTH}
+%    Two ornaments flanking a thin rule — classic chapter-break divider.
+%    Example: \ornamentdivider{11}{11}{2cm}   (same glyph mirrored)
+%
+%  \cornerframe
+%    A four-corner decorative frame sized to \textwidth × a given height.
+%    Used on the title page.
+%
+% Quick ornament reference for this project:
+%   84, 85, 86  — central fleurons / rosettes          (chapter head)
+%   11          — curved leaf spray (mirror for pairs) (dividers)
+%   14, 15      — s-curve flourishes                   (dividers)
+%   61, 63      — horizontal border segments            (rules)
+%   37, 38      — corner pieces                         (title page frame)
+%   80          — small lozenge / diamond               (inline accent)
+
+\newcommand{\centerornament}[2]{%
+	\begin{center}
+		\pgfornament[width=#2, color=black]{#1}
+	\end{center}%
+}
+
+% A divider: left ornament | rule | right ornament (mirrored)
+\newcommand{\ornamentdivider}[3]{%
+	\begin{center}
+		\pgfornament[width=#3]{#1}%
+		\hspace{0.4em}%
+		\reflectbox{\pgfornament[width=#3]{#2}}%
+	\end{center}%
+}
+
+% A centred pair with a small diamond between them
+\newcommand{\ornamentpair}[3]{%
+	\begin{center}
+		\pgfornament[width=#3]{#1}%
+		\hspace{0.5em}%
+		\pgfornament[width=0.4cm]{80}%
+		\hspace{0.5em}%
+		\pgfornament[width=#3]{#2}%
+	\end{center}%
+}
+
+% ── Chapter ornament machinery ────────────────────────────────────────────────
+%  Instead of a font glyph, we now store a pgfornament NUMBER.
+%  \chapterornament{84}  →  ornament #84 centred below the chapter title.
+%  \chapterornament{}    →  no ornament (default).
+
 \newcommand{\chapterornament}[1]{\def\currentornament{#1}}
 \def\currentornament{}
 
 \newcommand{\chaptertitleblock}[1]{%
 	#1%
 	\ifx\currentornament\empty\else
-	\\[6pt]{\ornamentsFont\currentornament}%
-	\vspace{1em}
+	\\[10pt]%
+	\pgfornament[width=2.2cm, color=black]{\currentornament}%
+	\vspace{0.6em}%
 	\fi
 }
 
+% ── Title Formats ─────────────────────────────────────────────────────────────
 \titlespacing*{\chapter}{0pt}{0.1\textheight}{1em}
 \titleformat{\chapter}[block]
 {\chapterfont\Huge\centering}
@@ -58,7 +114,6 @@
 % ── Headers and Footers ───────────────────────────────────────────────────────
 \pagestyle{fancy}
 \fancyhf{}
-\newfontface\headerfont{Bodoni 72-Book Italic}
 \fancyhead[LO,RE]{\headerfont\thepage}
 \fancyhead[RO]{\headerfont\itshape The Notebook}
 \fancyhead[LE]{\headerfont\itshape\leftmark}
@@ -97,6 +152,15 @@
 		\centering
 		\vspace*{0.9cm}
 		
+		% Top corner ornaments
+		% Ornament 37 = top-left corner; \reflectbox mirrors it for top-right
+%		\noindent
+%		\pgfornament[width=1.4cm]{37}%
+%		\hfill%
+%		\reflectbox{\pgfornament[width=1.4cm]{37}}
+		
+		\vspace{0.3cm}
+		
 		{\fontsize{42}{46}\selectfont\itshape
 			The\\[0.2em]
 			Notebook\par}
@@ -108,7 +172,8 @@
 		
 		\vspace{0.7cm}
 		
-		\rule{3cm}{0.4pt}
+		% Replaces plain \rule — a horizontal ornament border segment
+		\pgfornament[width=3cm]{84}
 		
 		\vspace{0.9cm}
 		
@@ -125,14 +190,23 @@
 		{\fontsize{8}{10}\selectfont\addfontfeatures{LetterSpace=40}%
 			\MakeUppercase{Foggy Walpole Books \& Press}}
 		
+		\vspace{.5em}
+		
 		\includegraphics[width=0.1\linewidth, keepaspectratio]{images/Foggy Walpole Dog}
 		
-		\vspace{-0.4cm}
+		\vspace{-0.1cm}
 		
 		{\fontsize{8}{10}\selectfont\addfontfeatures{LetterSpace=12}%
 			Seattle}
 		
-		\vspace{0.5cm}
+		\vspace{0.4cm}
+		
+		% Bottom corner ornaments — ornament 38 is the footer-style corner
+%		\pgfornament[width=1.4cm, symmetry=h]{37}%
+%		\hfill%
+%		\reflectbox{\pgfornament[width=1.4cm, symmetry=h]{37}}
+		
+		\vspace{0.2cm}
 	\end{titlepage}
 	
 	% ── Copyright Page ────────────────────────────────────────────────────────────
@@ -156,7 +230,7 @@
 		This edition published 2026 by\\
 		Foggy Walpole Books and Press, Seattle\\[0.6em]
 		
-		For Louise\\[0.6em]
+		Made Though Fair Use --- Not for Sale\\[0.6em]
 	}
 	
 	% ── Epigraph ──────────────────────────────────────────────────────────────────
@@ -189,16 +263,18 @@
 	
 	\begin{center}
 		{\fontsize{10}{16}\selectfont\itshape
-			This book is dedicated with love to\\[0.4em]
-			Cathy,\\[0.4em]
-			my wife and my friend.\par}
+			This edition is for my Love,\\[0.4em]
+			Louise,\\[0.4em]
+			my wife, my friend, my home.\par}
 	\end{center}
 	
 	\vspace*{\fill}
 	
+	% ── Main Matter ───────────────────────────────────────────────────────────────
 	\mainmatter
+	\noindent\fontsize{12}{14}\selectfont
 	
-\chapterornament{p}
+\chapterornament{86}
 \chapter{Miracles}
 
 \textit{\textbf{Who am I? And how, I wonder, will this story end?\\}}
@@ -310,7 +386,7 @@ that has come to dominate my life will once again prevail.
 And maybe, just maybe, it will.
 
 
-\chapterornament{S}
+\chapterornament{86}
 \chapter{Ghosts}
 
 \lettrine[findent=0.3em, nindent=0.0em]{I}{t} was early October 1946, and Noah Calhoun watched the fading sun sink
@@ -1091,7 +1167,7 @@ searching for answers she needed to know, and Noah Calhoun, the dreamer,
 thirty-one, visited by the ghost that had come to dominate his life.
 
 
-\chapterornament{p}
+\chapterornament{86}
 \chapter{Reunion}
 
 
@@ -1122,7 +1198,7 @@ When she was finally ready, she took a deep breath and smiled.
 Her comment startled him, and he looked at her with amazement in his
 eyes. Then, after shaking his head slightly, he slowly began to smile.
 
-``You too . . . ,'' he stammered. He brought his hand to his chin, and
+``You too   \dots\ ,'' he stammered. He brought his hand to his chin, and
 she noticed he hadn't shaved. ``It's really you, isn't it? I can't
 believe it. . . .''
 
@@ -1470,7 +1546,7 @@ You could have written me instead, or even called.''
 ``Why?''
 
 
-She hesitated. ``I don't know . . . ,'' she said, trailing off, and the
+She hesitated. ``I don't know   \dots\ ,'' she said, trailing off, and the
 way she said it made him believe her. The gravel crunched beneath their
 feet as they walked in silence for a few steps. Then he asked:
 
@@ -1681,7 +1757,7 @@ He looked up from the last bag he was unpacking. ``Almost a year.''
 
 He laughed under his breath. ``No. I always thought I would when I was
 young, and I started that way. But it was just too much. It would have
-taken years, and so I ended up hiring some people . . . actually a lot
+taken years, and so I ended up hiring some people   \dots\ actually a lot
 of people. But even with them, it was still a lot of work, and most of
 the time I didn't stop until past midnight.''
 
@@ -1730,7 +1806,7 @@ late.''
 passed on, I don't really know who to invite.''
 
 By his tone, she knew he was just making conversation. Yet for some
-reason it made her feel . . . lonely. He seemed to realize how she was
+reason it made her feel   \dots\ lonely. He seemed to realize how she was
 feeling, but before she could dwell on it, he changed the subject.
 
 ``I'm going to get the crabs in to marinate for a few minutes before I
@@ -1923,7 +1999,7 @@ single reply.''
 She slowly shook her head before lowering her eyes.
 
 
-``I didn't know . . . ,'' she finally said, quietly, and he knew it must
+``I didn't know   \dots\ ,'' she finally said, quietly, and he knew it must
 have been her mother, checking the mail, removing the letters without
 her knowledge. It was what he had always suspected, and he watched as
 Allie came to the same realization.
@@ -2571,11 +2647,10 @@ his face in his hands and tears in his eyes.
 
 He didn't know how to stop them.
 
-\chapterornament{p}
+\chapterornament{86}
 	\chapter{Phone Calls}
 
 Lon hung up the phone.\\
-
 
 \lettrine[findent=0.5em, nindent=0.0em]{H}{e} had called at seven, then at eight-thirty, and now he checked his
 watch again. Nine forty-five.
@@ -2622,7 +2697,7 @@ maybe an hour or so, something clicked in his mind. The little detail.
 
 Detail.
 
-Something insignificant? Something important? Think . . . think . . .
+Something insignificant? Something important? Think   \dots\ think . . .
 
 
 Damn, what was it?
@@ -2631,7 +2706,7 @@ Damn, what was it?
 His mind clicked.
 
 
-Something . . . something . . . \emph{something said?} Something had
+Something   \dots\ something   \dots\ \emph{something said?} Something had
 been said? Yes, that was it. He knew it. But what was it? Had Allie said
 anything on the phone? That had been when it started, and he ran through
 the conversation again. No, nothing out of the ordinary.
@@ -2681,7 +2756,7 @@ his schedule to make sure he wasn't overextending himself. . . .
 
 And his mind clicked another notch.
 
-Check . . . checking . . . \emph{checking in?}
+Check   \dots\ checking   \dots\ \emph{checking in?}
 
 He looked to the ceiling. Checking in?
 
@@ -2711,7 +2786,7 @@ And the rack tightened its grip, another part coming together.
 Another part. . . but there was more. . . .
 
 
-Allie, New Bern . . . and . . . and . . . something at a party. A
+Allie, New Bern   \dots\ and   \dots\ and   \dots\ something at a party. A
 comment in passing. From Allie's mother. He'd hardly noticed it. But
 what had she said?
 
@@ -2736,7 +2811,7 @@ against his lips. Coincidence? Could be nothing. Could be exactly what
 she said. Could be stress and antique shopping. Possible. Even probable.
 
 
-Yet . . . yet . . . what if?
+Yet   \dots\ yet   \dots\ what if?
 
 
 Lon considered the other possibility, and for the first time in a long
@@ -2760,7 +2835,7 @@ time that evening.
 
 And again there was no answer.
 
-\chapterornament{p}
+\chapterornament{86}
 \chapter{Kayaks and Forgotten Dreams}
 
 \lettrine[findent=0.3em, nindent=0.0em]{A}{llie} woke early the next morning, forced by the incessant chirping of
@@ -2818,7 +2893,7 @@ where gray took its place. He took a few deep breaths, smelling pine
 trees and brackish water, and began to reflect. This had been part of
 what he'd missed most when he had lived up north. Because of the long
 hours at work, there had been little time to spend on the water.
-Camping, hiking, paddling on rivers, dating, working . . . something had
+Camping, hiking, paddling on rivers, dating, working   \dots\ something had
 had to go. For the most part he'd been able to explore New Jersey's
 countryside on foot whenever he'd had extra time, but in fourteen years
 he hadn't canoed or kayaked once. It had been one of the first things
@@ -3026,8 +3101,8 @@ Good, she thought. That's good. And then, just as suddenly, a pang in
 her chest. Why the urgency? Why so many calls? Had she said anything
 yesterday? Why would he be so persistent? It was completely unlike him.
 
-Is there any way he could have found out? No . . . that was impossible.
-Unless someone saw her here yesterday and called. . . . But they would
+Is there any way he could have found out? No   \dots\ that was impossible.
+Unless someone saw her here yesterday and called.   \dots\ But they would
 have had to follow her out to Noah's. No one would have done that.
 
 She had to call him now; no way to get around it. But she didn't want
@@ -3075,7 +3150,7 @@ have been, and she wondered what that meant.
 As she was driving over the drawbridge less than four minutes after
 she'd left the inn, Lon called from the courthouse.
 
-\chapterornament{p}
+\chapterornament{86}
 \chapter{Moving Water}
 
 \lettrine[findent=0.8em, nindent=0.0em]{N}{oah} was sitting in his rocker, drinking sweet tea, listening for the
@@ -3406,7 +3481,7 @@ the canoe as he propelled it forward, away from the pull of the creek.
 ``Okay,'' he finally said after he'd stopped paddling. ``You can open
 them now.''
 
-\chapterornament{p}
+\chapterornament{86}
 \chapter{Swans and Storms}
 
 \lettrine[findent=0.5em, nindent=0.0em]{T}{hey} sat in the middle of a small lake fed by the waters of Brices
@@ -3458,7 +3533,7 @@ Matamuskeet.''
 
 Noah paddled hard as dark clouds rolled directly overhead. Soon rain
 began to fall, a light sprinkle at first, then gradually harder.
-Lightning ...a pause . . . then thunder again. A little louder now.
+Lightning \dots\ a pause   \dots\ then thunder again. A little louder now.
 Maybe six or seven miles away. More rain as Noah began to paddle even
 harder, his muscles tightening with every stroke.
 
@@ -3470,8 +3545,8 @@ Falling . . .
 Falling with the wind . . .
 
 
-Falling hard and thick . . . Noah rowing . . . racing the sky . . .
-still getting wet . . . cursing to himself . . . losing to Mother
+Falling hard and thick   \dots\ Noah rowing   \dots\ racing the sky . . .
+still getting wet   \dots\ cursing to himself   \dots\ losing to Mother
 Nature...
 
 The downpour was steady now, and Allie watched the rain fall diagonally
@@ -3792,7 +3867,7 @@ talking to my best friend about what happened that summer, and she said
 that you got what you wanted, and that she wasn't surprised that you
 wouldn't write. I didn't believe that you were that way, I never did,
 but hearing it and thinking about all our differences made me wonder if
-maybe the summer meant more to me than it had meant to you. . . . And
+maybe the summer meant more to me than it had meant to you.   \dots\ And
 then, while all this was going through my head, I heard from Sarah. She
 said that you had left New Bern.''
 
@@ -4062,7 +4137,7 @@ and I always will.''
 ``Oh, Noah,'' she said, pulling him to her. She wanted him, needed him
 now more than ever, like nothing she'd ever known.
 
-\chapterornament{p}
+\chapterornament{86}
 \chapter{Courtrooms}
 
 \lettrine[findent=0.5em, nindent=0.0em]{L}{ater} that morning, three men---two lawyers and the judge---sat in
@@ -4118,7 +4193,7 @@ Two minutes later he was leaving the courthouse. He walked to the car he
 had parked directly across the street, got in, and began the drive to
 New Bern, his hands shaking.
 
-\chapterornament{p}
+\chapterornament{86}
 \chapter{An Unexpected Visitor}
 
 \lettrine[findent=0.5em, nindent=0.0em]{N}{oah} made breakfast for Allie while she slept in the living room. Bacon,
@@ -4344,7 +4419,7 @@ another minute, just holding each other.
 On her way out the door, Allie thought that she heard her mother
 whisper, ``Follow your heart,'' but she couldn't be sure.
 
-\chapterornament{p}
+\chapterornament{86}
 \chapter{Crossroads}
 
 Noah opened the door for Anne Nelson as she went out.\\
@@ -4445,7 +4520,7 @@ might have been. Stay with me, Allie.''
 Tears began to fill her eyes. ``I don't know if I can,'' she finally
 whispered.
 
-``You can. Allie . . . I can't live my life happily knowing you're with
+``You can. Allie   \dots\ I can't live my life happily knowing you're with
 someone else. That would kill a part of me. What we have is rare. It's
 too beautiful to just throw it away.''
 
@@ -4556,7 +4631,7 @@ toward the road that would take her back to town. Leaving---she was
 leaving!---and Noah felt dizzy at the sight.
 
 
-Edging forward . . . past him now . . .
+Edging forward   \dots\ past him now . . .
 
 
 She waved one last time without smiling before she began to accelerate,
@@ -4574,7 +4649,7 @@ steadily away from him, taking his heart with her.
 
 But, like her mother, he realized sadly, she never looked back.
 
-\chapterornament{p}
+\chapterornament{86}
 \chapter{A Letter fromYesterday}
 
 \lettrine[findent=0.5em, nindent=0.0em]{D}{riving} with tears in her eyes was difficult, but she went on anyway,
@@ -4700,7 +4775,7 @@ still wasn't sure what she was going to say to him.
 And the answer didn't finally come until she reached the door and opened
 it and saw Lon standing in the lobby.
 
-\chapterornament{p}
+\chapterornament{86}
 \chapter{Winter for Two}
 
 \lettrine[findent=0.5em, nindent=0.0em]{T}{he} story ends there, so I close the notebook, remove my glasses, and
@@ -5050,7 +5125,7 @@ Nothing is ever really lost, or can be lost,
 
 No birth, identity, form---no object of the world,
 
-Nor life, nor force, nor any visible thing; . . . The body, sluggish,
+Nor life, nor force, nor any visible thing;   \dots\ The body, sluggish,
 aged, cold---the embers left from earlier fires,
 
 . . . shall duly flame again;''
@@ -5146,7 +5221,7 @@ glowed above our heads. The words echoed in my head: \emph{the early
 stages of Alzheimer's . . .}
 
 My world spun in circles, and I felt her grip tighten on my arm. She
-whispered, almost to herself: ``Oh, Noah . . . Noah . . .''
+whispered, almost to herself: ``Oh, Noah   \dots\ Noah . . .''
 
 
 And as the tears started to fall, the word came back to me again: . . .
@@ -5183,11 +5258,11 @@ explanation.
 ``It's a degenerative brain disorder affecting memory and personality .
 . . there is no cure or therapy. . . .
 
-There's no way to tell how fast it will progress . . . it differs from
+There's no way to tell how fast it will progress   \dots\ it differs from
 person to person. ...I wish I knew more. . . .
 
 Some days will be better than others. ...It will grow worse with the
-passage of time. . . . I'm sorry to be the one who has to tell you. . .
+passage of time.   \dots\ I'm sorry to be the one who has to tell you. . .
 .''
 
 
@@ -5249,7 +5324,7 @@ only to those who feel deeply in their hearts, and I knew that no man
 could be more lucky than me.}
 
 
-And after our son died, the one who resembled his mother . . . It was
+And after our son died, the one who resembled his mother   \dots\ It was
 the hardest time we ever went through, and the words still ring true
 today:
 
@@ -5824,7 +5899,7 @@ Noah.''
 
 
 \emph{Noah,} I hear again. \emph{Noah.} The word echoes in my head.
-\emph{Noah . . . Noah.}
+\emph{Noah   \dots\ Noah.}
 
 She knows, I think to myself, she knows who I am. . . .
 
@@ -5836,7 +5911,7 @@ Such a tiny thing, this knowledge, but for me it is a gift from God, and
 I feel our lifetime together, holding her, loving her, and being with
 her through the best years of my life.
 
-She murmurs, ``Noah . . . my sweet Noah . . .'' And I, who could not
+She murmurs, ``Noah   \dots\ my sweet Noah . . .'' And I, who could not
 accept the doctor's words, have triumphed again, at least for a moment.
 I give up the pretense of mystery, and I kiss her hand and bring it to
 my cheek and whisper in her ear. I say:
@@ -5900,8 +5975,8 @@ head. Then, turning toward the corner of the room, she stares for a long
 time, concern etched on her face.
 
 \emph{No!} my mind screams. \emph{Not yet! Not now ...not when we're so
-close! Not tonight! Any night but tonight. . . . Please!} The words are
-inside me. \emph{I can't take it again! It isn't fair . . . it isn't
+close! Not tonight! Any night but tonight.   \dots\ Please!} The words are
+inside me. \emph{I can't take it again! It isn't fair   \dots\ it isn't
 fair....}
 
 
@@ -6028,7 +6103,7 @@ look a little down.''
 
 
 ``She was okay. We talked for almost four hours.'' ``Four hours? Noah,
-that's . . . incredible.''
+that's   \dots\ incredible.''
 
 I can only nod. He goes on, shaking his head. ``I've never seen anything
 like it, or even heard about it. I guess that's what love is all about.
@@ -6512,7 +6587,7 @@ away, as I had so many years ago. I close my eyes and become a mighty
 ship in churning waters, strong and fearless, and she is my sails. I
 gently trace the outline of her cheek, then take her hand in mine. I
 kiss her lips, her cheeks, and listen as she takes a breath. She murmurs
-softly, ``Oh, Noah . . . I've missed you.'' Another miracle---the
+softly, ``Oh, Noah   \dots\ I've missed you.'' Another miracle---the
 greatest of all!---and there's no way I can stop the tears as we begin
 to slip toward heaven itself. For at that moment, the world is full of
 wonder as I feel her fingers reach for the buttons on my shirt and
